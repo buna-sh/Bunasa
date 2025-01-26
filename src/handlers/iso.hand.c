@@ -1,3 +1,4 @@
+#include "./iso.hand.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,4 +31,3 @@ int validate_iso(const char *iso_path) {
 
     return 1; // ISO is valid and accessible
 }
-

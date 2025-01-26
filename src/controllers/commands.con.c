@@ -6,7 +6,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "commands.con.h"  
-#include "../handlers/iso.hand.c"
+#include "../handlers/iso.hand.h"
 
 // Function to list active VMs
 void list_vms(virConnectPtr conn) {
