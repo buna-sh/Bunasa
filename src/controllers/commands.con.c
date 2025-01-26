@@ -5,7 +5,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "commands.con.h"  // Include the header for function declarations
+#include "commands.con.h"  
+#include "../handlers/iso.hand.c"
 
 // Function to list active VMs
 void list_vms(virConnectPtr conn) {
@@ -70,6 +71,11 @@ void stop_vm(virConnectPtr conn, const char *vm_name) {
 
 // Function to create a virtual machine with specified resources
 void create_vm(virConnectPtr conn, const char *vm_name, int ram, int cpu, const char *iso_path) {
+    // Validate ISO file before proceeding
+    if (!validate_iso(iso_path)) {
+        return;  // ISO is invalid, exit early
+    }
+
     // Path to the VM disk image
     const char *disk_path = "/var/lib/libvirt/images/";
     char vm_image_path[1024];
@@ -138,6 +144,7 @@ void create_vm(virConnectPtr conn, const char *vm_name, int ram, int cpu, const 
 
     printf("VM %s created with %d MB RAM, %d CPU(s), and ISO %s.\n", vm_name, ram, cpu, iso_path);
 }
+
 
 // Function to initialize libvirt connection
 virConnectPtr initialize_libvirt() {
