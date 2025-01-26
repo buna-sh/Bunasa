@@ -8,7 +8,7 @@ CFLAGS = -Wall -g
 LIBS = -lvirt
 
 # Source files
-SRC = core/core.core.c controllers/commands.con.c handlers/iso.hand.c
+SRC = core/core.core.c controllers/commands.con.c controllers/network.con.c handlers/iso.hand.c 
 
 # Output executable file
 OUT = vm_manager

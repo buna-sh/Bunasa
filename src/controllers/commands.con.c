@@ -73,7 +73,7 @@ void stop_vm(virConnectPtr conn, const char *vm_name) {
 void create_vm(virConnectPtr conn, const char *vm_name, int ram, int cpu, const char *iso_path) {
     // Validate ISO file before proceeding
     if (!validate_iso(iso_path)) {
-        return;  // ISO is invalid, exit early
+        return;  
     }
 
     // Path to the VM disk image
@@ -163,4 +163,12 @@ void display_usage() {
     printf("  start <vm_name>  Start the VM with the given name\n");
     printf("  stop <vm_name>   Stop the VM with the given name\n");
     printf("  create <vm_name> Create a new VM with the given name\n");
+    printf("  list_networks  Displays the current available networks\n");
+    printf("  create_network <name> <ip> {you can enter dhcp for IP.} Creates a network bridge.  \n");
+    printf("  attach_network_to_vm <vm_name> <bridge_name>> Connects the bridge to the VM.  \n");
+    printf("  delete_network <network_name> Deletes a network / bridge.  \n");
+
+
+
+
 }
