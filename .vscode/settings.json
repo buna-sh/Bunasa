@@ -2,6 +2,8 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "iso.hand.h": "c",
-        "network.con.h": "c"
+        "network.con.h": "c",
+        "typeinfo": "c",
+        "libvirt-domain.h": "c"
     }
 }

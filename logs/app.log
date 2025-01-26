@@ -1,3 +1,21 @@
 [2025-01-26 18:44:44] [INFO] Logging system initialized.
 [2025-01-26 18:44:44] [ERROR] Invalid arguments. Usage: ./vm_manager <command> <args>
 [2025-01-26 18:44:44] [INFO] Logging system cleaned up.
+[2025-01-26 19:02:25] [INFO] Logging system initialized.
+[2025-01-26 19:02:25] [ERROR] Invalid arguments. Usage: ./vm_manager <command> <args>
+[2025-01-26 19:02:25] [INFO] Logging system cleaned up.
+[2025-01-26 19:02:29] [INFO] Logging system initialized.
+[2025-01-26 19:02:29] [ERROR] Unknown command.
+[2025-01-26 19:02:29] [INFO] Logging system cleaned up.
+[2025-01-26 19:02:42] [INFO] Logging system initialized.
+[2025-01-26 19:02:42] [INFO] Listing disks for VM: testvmforme
+[2025-01-26 19:02:42] [INFO] Logging system cleaned up.
+[2025-01-26 19:04:04] [INFO] Logging system initialized.
+[2025-01-26 19:04:04] [INFO] Listing disks for VM: testvmforme
+[2025-01-26 19:04:04] [INFO] Logging system cleaned up.
+[2025-01-26 19:04:08] [INFO] Logging system initialized.
+[2025-01-26 19:04:08] [INFO] Listing disks for VM: testvmforme
+[2025-01-26 19:04:08] [INFO] Logging system cleaned up.
+[2025-01-26 19:04:10] [INFO] Logging system initialized.
+[2025-01-26 19:04:10] [INFO] Listing disks for VM: testvmforme
+[2025-01-26 19:04:10] [INFO] Logging system cleaned up.
