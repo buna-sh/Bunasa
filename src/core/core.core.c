@@ -47,6 +47,9 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(argv[1], "create_network") == 0 && argc == 4) {
         log_message(INFO, "Creating network: %s with IP: %s", argv[2], argv[3]);
         create_network(conn, argv[2], argv[3]);
+    } else if (strcmp(argv[1], "list_networks") == 0) {  // Add this line for listing networks
+        log_message(INFO, "Listing active networks.");
+        list_networks(conn);  // Call list_networks to display active networks
     } else if (strcmp(argv[1], "create_disk") == 0 && argc == 4) {
         log_message(INFO, "Creating disk: %s with size: %s", argv[2], argv[3]);
         create_disk(conn, argv[2], argv[3], "qcow2");

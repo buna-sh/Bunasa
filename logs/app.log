@@ -112,3 +112,12 @@
 [2025-01-26 19:18:37] [INFO] Logging system initialized.
 [2025-01-26 19:18:37] [INFO] Creating network: testbirdgea with IP: dhcp
 [2025-01-26 19:18:37] [INFO] Logging system cleaned up.
+[2025-01-26 19:19:27] [INFO] Logging system initialized.
+[2025-01-26 19:19:27] [INFO] Creating network: testbirdgea with IP: dhcp
+[2025-01-26 19:19:27] [INFO] Logging system cleaned up.
+[2025-01-26 19:20:30] [INFO] Logging system initialized.
+[2025-01-26 19:20:30] [ERROR] Unknown command.
+[2025-01-26 19:20:30] [INFO] Logging system cleaned up.
+[2025-01-26 19:21:30] [INFO] Logging system initialized.
+[2025-01-26 19:21:30] [INFO] Listing active networks.
+[2025-01-26 19:21:30] [INFO] Logging system cleaned up.
