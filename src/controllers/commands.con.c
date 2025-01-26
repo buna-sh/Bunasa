@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <libvirt/libvirt.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 // Function to list active VMs
 void list_vms(virConnectPtr conn) {
@@ -65,6 +69,30 @@ void stop_vm(virConnectPtr conn, const char *vm_name) {
 
 // Function to create a virtual machine from XML configuration
 void create_vm(virConnectPtr conn, const char *vm_name) {
+    // Path to the VM disk image
+    const char *disk_path = "/var/lib/libvirt/images/";
+    char vm_image_path[1024];
+    snprintf(vm_image_path, sizeof(vm_image_path), "%s%s.qcow2", disk_path, vm_name);
+
+    // Ensure the directory exists
+    struct stat st = {0};
+    if (stat(disk_path, &st) == -1) {
+        if (mkdir(disk_path, 0755) == -1) {
+            fprintf(stderr, "Failed to create directory %s.\n", disk_path);
+            return;
+        }
+    }
+
+    // Create the disk image file if it doesn't exist
+    if (access(vm_image_path, F_OK) == -1) {
+        char cmd[1024];
+        snprintf(cmd, sizeof(cmd), "qemu-img create -f qcow2 %s 10G", vm_image_path);
+        if (system(cmd) != 0) {
+            fprintf(stderr, "Failed to create disk image for VM %s.\n", vm_name);
+            return;
+        }
+    }
+
     // Minimal XML configuration for the VM
     const char *xml = 
         "<domain type='kvm'>"
@@ -77,7 +105,7 @@ void create_vm(virConnectPtr conn, const char *vm_name) {
         "  <devices>"
         "    <disk type='file' device='disk'>"
         "      <driver name='qemu' type='qcow2'/>"
-        "      <source file='/var/lib/libvirt/images/%s.qcow2'/>"
+        "      <source file='%s'/>"
         "      <target dev='vda' bus='virtio'/>"
         "    </disk>"
         "    <interface type='network'>"
@@ -88,9 +116,9 @@ void create_vm(virConnectPtr conn, const char *vm_name) {
         "  </devices>"
         "</domain>";
 
-    // Prepare the XML string with the VM name
+    // Prepare the XML string with the VM name and disk path
     char vm_xml[1024];
-    snprintf(vm_xml, sizeof(vm_xml), xml, vm_name, vm_name);  // Using VM name in XML
+    snprintf(vm_xml, sizeof(vm_xml), xml, vm_name, vm_image_path);  // Using VM name and disk path in XML
 
     // Create the VM from the XML configuration
     virDomainPtr domain = virDomainCreateXML(conn, vm_xml, 0);
