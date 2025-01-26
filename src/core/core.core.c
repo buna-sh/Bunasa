@@ -14,42 +14,13 @@ virConnectPtr initialize_libvirt() {
     return conn;
 }
 
-void list_vms(virConnectPtr conn) {
-    virDomainPtr *domains;
-    int num_domains = virConnectListAllDomains(conn, &domains, VIR_CONNECT_LIST_DOMAINS_ACTIVE);
-    
-    if (num_domains < 0) {
-        fprintf(stderr, "Failed to list domains.\n");
-        exit(1);
-    }
-    
-    printf("Active VMs:\n");
-    for (int i = 0; i < num_domains; i++) {
-        const char *name = virDomainGetName(domains[i]);
-        if (name != NULL) {
-            printf("%s\n", name);
-        } else {
-            fprintf(stderr, "Failed to get the name of domain %d.\n", i);
-        }
-    }
-    
-    // Cleanup
-    free(domains);
-}
-
-// Cleanup function
-void cleanup_libvirt(virConnectPtr conn) {
-    if (conn) {
-        virConnectClose(conn);
-    }
-}
-
 // Function to display usage instructions
 void display_usage() {
     printf("Usage:\n");
     printf("  list             List all active VMs\n");
     printf("  start <vm_name>  Start the VM with the given name\n");
     printf("  stop <vm_name>   Stop the VM with the given name\n");
+    printf("  create <vm_name> Create a new VM with the given name\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -66,9 +37,11 @@ int main(int argc, char *argv[]) {
     if (strcmp(argv[1], "list") == 0) {
         list_vms(conn);
     } else if (strcmp(argv[1], "start") == 0 && argc == 3) {
-        start_vm(conn, argv[2]);  // Call the start_vm function from vm_manager.c
+        start_vm(conn, argv[2]);  // Start VM
     } else if (strcmp(argv[1], "stop") == 0 && argc == 3) {
-        stop_vm(conn, argv[2]);   // Call the stop_vm function from vm_manager.c
+        stop_vm(conn, argv[2]);   // Stop VM
+    } else if (strcmp(argv[1], "create") == 0 && argc == 3) {
+        create_vm(conn, argv[2]); // Create new VM
     } else {
         display_usage();
     }
