@@ -2,41 +2,39 @@
 #include <libvirt/libvirt.h>
 #include <stdlib.h>
 #include <string.h>
-#include "network.con.h"
-
-// Function to create a virtual network
-#include <libvirt/libvirt.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 // Function to create a virtual network
 int create_network(virConnectPtr conn, const char *network_name, const char *ip_address) {
     char network_xml[2048];
+    char bridge_name[50];
+    
+    // Generate a unique bridge name based on the network name
+    snprintf(bridge_name, sizeof(bridge_name), "br-%s-%d", network_name, rand());
 
     // If IP is "dhcp", we will set up DHCP
     if (strcmp(ip_address, "dhcp") == 0) {
         snprintf(network_xml, sizeof(network_xml),
                  "<network>"
                  "  <name>%s</name>"
-                 "  <bridge name='virbr0' stp='on' delay='0'/>"
+                 "  <bridge name='%s' stp='on' delay='0'/>"
                  "  <ip address='0.0.0.0' netmask='0.0.0.0'>"
                  "    <dhcp>"
                  "      <range start='192.168.100.100' end='192.168.100.200'/>"
                  "    </dhcp>"
                  "  </ip>"
-                 "</network>", network_name);
+                 "</network>", network_name, bridge_name);
     } else {
         // If a static IP is provided, use the given IP address
         snprintf(network_xml, sizeof(network_xml),
                  "<network>"
                  "  <name>%s</name>"
-                 "  <bridge name='virbr0' stp='on' delay='0'/>"
+                 "  <bridge name='%s' stp='on' delay='0'/>"
                  "  <ip address='%s' netmask='255.255.255.0'>"
                  "    <dhcp>"
                  "      <range start='192.168.100.100' end='192.168.100.200'/>"
                  "    </dhcp>"
                  "  </ip>"
-                 "</network>", network_name, ip_address);
+                 "</network>", network_name, bridge_name, ip_address);
     }
 
     // Create the network using virNetworkCreateXML
@@ -49,29 +47,68 @@ int create_network(virConnectPtr conn, const char *network_name, const char *ip_
     printf("Network %s created successfully.\n", network_name);
     return 0;
 }
-// Function to list all active virtual networks
+
+
+// Function to start a network
+int start_network(virConnectPtr conn, const char *network_name) {
+    virNetworkPtr network = virNetworkLookupByName(conn, network_name);
+    if (network == NULL) {
+        fprintf(stderr, "Network %s not found.\n", network_name);
+        return -1;
+    }
+
+    if (virNetworkCreate(network) != 0) {
+        fprintf(stderr, "Failed to start network %s.\n", network_name);
+        return -1;
+    }
+
+    printf("Network %s started successfully.\n", network_name);
+    return 0;
+}
+
+// Function to stop a network
+int stop_network(virConnectPtr conn, const char *network_name) {
+    virNetworkPtr network = virNetworkLookupByName(conn, network_name);
+    if (network == NULL) {
+        fprintf(stderr, "Network %s not found.\n", network_name);
+        return -1;
+    }
+
+    if (virNetworkDestroy(network) != 0) {
+        fprintf(stderr, "Failed to stop network %s.\n", network_name);
+        return -1;
+    }
+
+    printf("Network %s stopped successfully.\n", network_name);
+    return 0;
+}
+
 void list_networks(virConnectPtr conn) {
-    virNetworkPtr *networks;
+    virNetworkPtr *networks = NULL;
     int num_networks = virConnectListAllNetworks(conn, &networks, 0);
 
     if (num_networks < 0) {
-        fprintf(stderr, "Failed to list networks.\n");
-        exit(1);
+        fprintf(stderr, "Failed to list networks. Return code: %d\n", num_networks);
+        return;
     }
 
-    printf("Active Networks:\n");
-    for (int i = 0; i < num_networks; i++) {
-        const char *name = virNetworkGetName(networks[i]);
-        if (name != NULL) {
-            printf("%s\n", name);
-        } else {
-            fprintf(stderr, "Failed to get the name of network %d.\n", i);
+    if (num_networks == 0) {
+        printf("No active networks found.\n");
+    } else {
+        printf("Active Networks:\n");
+        for (int i = 0; i < num_networks; i++) {
+            const char *name = virNetworkGetName(networks[i]);
+            if (name != NULL) {
+                printf("Network %d: %s\n", i, name);
+            } else {
+                fprintf(stderr, "Failed to get the name of network %d.\n", i);
+            }
         }
     }
 
-    // Cleanup
     free(networks);
 }
+
 
 // Function to attach a VM to a virtual network
 int attach_network_to_vm(virConnectPtr conn, const char *vm_name, const char *network_name) {
@@ -118,3 +155,5 @@ int delete_network(virConnectPtr conn, const char *network_name) {
     printf("Network %s deleted successfully.\n", network_name);
     return 0;
 }
+
+

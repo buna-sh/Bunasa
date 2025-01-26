@@ -15,4 +15,10 @@ int attach_network_to_vm(virConnectPtr conn, const char *vm_name, const char *ne
 // Function to delete a virtual network
 int delete_network(virConnectPtr conn, const char *network_name);
 
+// Function to start a virtual network
+int start_network(virConnectPtr conn, const char *network_name);
+
+// Function to stop a virtual network
+int stop_network(virConnectPtr conn, const char *network_name);
+
 #endif // NETWORK_CONTROLLER_H

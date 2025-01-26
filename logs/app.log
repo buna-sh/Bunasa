@@ -22,3 +22,93 @@
 [2025-01-26 19:05:04] [INFO] Logging system initialized.
 [2025-01-26 19:05:04] [INFO] Creating disk: test with size: 10000
 [2025-01-26 19:05:04] [INFO] Logging system cleaned up.
+[2025-01-26 19:06:37] [INFO] Logging system initialized.
+[2025-01-26 19:06:37] [INFO] Listing disks for VM: testvmforme
+[2025-01-26 19:06:37] [INFO] Logging system cleaned up.
+[2025-01-26 19:06:49] [INFO] Logging system initialized.
+[2025-01-26 19:06:49] [INFO] Creating disk: test with size: 10000
+[2025-01-26 19:06:49] [INFO] Logging system cleaned up.
+[2025-01-26 19:07:06] [INFO] Logging system initialized.
+[2025-01-26 19:07:06] [INFO] Attaching disk: test to VM: testvmforme
+[2025-01-26 19:07:06] [INFO] Logging system cleaned up.
+[2025-01-26 19:07:18] [INFO] Logging system initialized.
+[2025-01-26 19:07:18] [ERROR] Unknown command.
+[2025-01-26 19:07:18] [INFO] Logging system cleaned up.
+[2025-01-26 19:07:25] [INFO] Logging system initialized.
+[2025-01-26 19:07:25] [INFO] Listing disks for VM: testvmforme
+[2025-01-26 19:07:25] [INFO] Logging system cleaned up.
+[2025-01-26 19:07:28] [INFO] Logging system initialized.
+[2025-01-26 19:07:28] [INFO] Listing disks for VM: testvmforme
+[2025-01-26 19:07:28] [INFO] Logging system cleaned up.
+[2025-01-26 19:07:31] [INFO] Logging system initialized.
+[2025-01-26 19:07:31] [ERROR] Unknown command.
+[2025-01-26 19:07:31] [INFO] Logging system cleaned up.
+[2025-01-26 19:07:33] [INFO] Logging system initialized.
+[2025-01-26 19:07:33] [INFO] Listing active VMs.
+[2025-01-26 19:07:33] [INFO] Logging system cleaned up.
+[2025-01-26 19:11:15] [INFO] Logging system initialized.
+[2025-01-26 19:11:16] [ERROR] Unknown command.
+[2025-01-26 19:11:16] [INFO] Logging system cleaned up.
+[2025-01-26 19:11:19] [INFO] Logging system initialized.
+[2025-01-26 19:11:19] [ERROR] Unknown command.
+[2025-01-26 19:11:19] [INFO] Logging system cleaned up.
+[2025-01-26 19:11:23] [INFO] Logging system initialized.
+[2025-01-26 19:11:23] [ERROR] Unknown command.
+[2025-01-26 19:11:23] [INFO] Logging system cleaned up.
+[2025-01-26 19:11:40] [INFO] Logging system initialized.
+[2025-01-26 19:11:40] [ERROR] Unknown command.
+[2025-01-26 19:11:40] [INFO] Logging system cleaned up.
+[2025-01-26 19:11:55] [INFO] Logging system initialized.
+[2025-01-26 19:11:55] [INFO] Creating network: testbirdge with IP: dchp
+[2025-01-26 19:11:55] [INFO] Logging system cleaned up.
+[2025-01-26 19:12:01] [INFO] Logging system initialized.
+[2025-01-26 19:12:01] [INFO] Creating network: testbirdge with IP: dhcp
+[2025-01-26 19:12:01] [INFO] Logging system cleaned up.
+[2025-01-26 19:14:13] [INFO] Logging system initialized.
+[2025-01-26 19:14:13] [INFO] Creating network: testbirdge with IP: dchp
+[2025-01-26 19:14:13] [INFO] Logging system cleaned up.
+[2025-01-26 19:14:20] [INFO] Logging system initialized.
+[2025-01-26 19:14:20] [INFO] Creating network: testbirdge with IP: dhcp
+[2025-01-26 19:14:20] [INFO] Logging system cleaned up.
+[2025-01-26 19:14:28] [INFO] Logging system initialized.
+[2025-01-26 19:14:28] [INFO] Creating network: testbirdge with IP: 192.0.12.10
+[2025-01-26 19:14:28] [INFO] Logging system cleaned up.
+[2025-01-26 19:14:34] [INFO] Logging system initialized.
+[2025-01-26 19:14:34] [INFO] Creating network: testbirdge with IP: 192.0.12.10/24
+[2025-01-26 19:14:34] [INFO] Logging system cleaned up.
+[2025-01-26 19:14:50] [INFO] Logging system initialized.
+[2025-01-26 19:14:50] [ERROR] Unknown command.
+[2025-01-26 19:14:50] [INFO] Logging system cleaned up.
+[2025-01-26 19:14:54] [INFO] Logging system initialized.
+[2025-01-26 19:14:54] [INFO] Creating network: testbirdge with IP: dhcp
+[2025-01-26 19:14:54] [INFO] Logging system cleaned up.
+[2025-01-26 19:15:36] [INFO] Logging system initialized.
+[2025-01-26 19:15:36] [INFO] Creating network: testbirdge with IP: dhcp
+[2025-01-26 19:15:36] [INFO] Logging system cleaned up.
+[2025-01-26 19:15:55] [INFO] Logging system initialized.
+[2025-01-26 19:15:55] [ERROR] Unknown command.
+[2025-01-26 19:15:55] [INFO] Logging system cleaned up.
+[2025-01-26 19:16:04] [INFO] Logging system initialized.
+[2025-01-26 19:16:04] [ERROR] Unknown command.
+[2025-01-26 19:16:04] [INFO] Logging system cleaned up.
+[2025-01-26 19:16:33] [INFO] Logging system initialized.
+[2025-01-26 19:16:33] [ERROR] Unknown command.
+[2025-01-26 19:16:33] [INFO] Logging system cleaned up.
+[2025-01-26 19:16:40] [INFO] Logging system initialized.
+[2025-01-26 19:16:40] [ERROR] Unknown command.
+[2025-01-26 19:16:40] [INFO] Logging system cleaned up.
+[2025-01-26 19:17:31] [INFO] Logging system initialized.
+[2025-01-26 19:17:31] [ERROR] Unknown command.
+[2025-01-26 19:17:31] [INFO] Logging system cleaned up.
+[2025-01-26 19:17:42] [INFO] Logging system initialized.
+[2025-01-26 19:17:42] [ERROR] Unknown command.
+[2025-01-26 19:17:42] [INFO] Logging system cleaned up.
+[2025-01-26 19:17:48] [INFO] Logging system initialized.
+[2025-01-26 19:17:48] [INFO] Creating network: testbirdgea with IP: dhcp
+[2025-01-26 19:17:48] [INFO] Logging system cleaned up.
+[2025-01-26 19:18:34] [INFO] Logging system initialized.
+[2025-01-26 19:18:34] [ERROR] Unknown command.
+[2025-01-26 19:18:34] [INFO] Logging system cleaned up.
+[2025-01-26 19:18:37] [INFO] Logging system initialized.
+[2025-01-26 19:18:37] [INFO] Creating network: testbirdgea with IP: dhcp
+[2025-01-26 19:18:37] [INFO] Logging system cleaned up.

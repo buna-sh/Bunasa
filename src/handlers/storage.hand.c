@@ -9,8 +9,7 @@
 // Function to create a new virtual disk within a storage pool
 int create_disk(virConnectPtr conn, const char *disk_name, const char *size, const char *format) {
     // Define storage pool name (you can use any existing pool)
-    const char *pool_name = "images"; // Example pool name, replace with your pool's name
-
+    const char *pool_name = "images";
     // Get the storage pool
     virStoragePoolPtr pool = virStoragePoolLookupByName(conn, pool_name);
     if (pool == NULL) {
