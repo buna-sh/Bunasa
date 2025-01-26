@@ -5,15 +5,15 @@
 #include "../controllers/commands.con.h"  // Include the header
 
 int main(int argc, char *argv[]) {
-    // Ensure we have at least one argument
-    if (argc < 2) {
+    // Ensure we have the correct number of arguments
+    if (argc < 5) {
         display_usage();
         return 1;
     }
-
+    
     // Initialize libvirt connection
     virConnectPtr conn = initialize_libvirt();
-
+    
     // Handle commands based on the arguments passed
     if (strcmp(argv[1], "list") == 0) {
         list_vms(conn);
@@ -21,14 +21,17 @@ int main(int argc, char *argv[]) {
         start_vm(conn, argv[2]);  // Start VM
     } else if (strcmp(argv[1], "stop") == 0 && argc == 3) {
         stop_vm(conn, argv[2]);   // Stop VM
-    } else if (strcmp(argv[1], "create") == 0 && argc == 3) {
-        create_vm(conn, argv[2], "/path/to/iso.iso"); // Create new VM
+    } else if (strcmp(argv[1], "create") == 0 && argc == 5) {
+        const char *vm_name = argv[2];
+        int ram = atoi(argv[3]);  // RAM in MB
+        int cpu = atoi(argv[4]);  // CPU cores
+        create_vm(conn, vm_name, ram, cpu, "/path/to/iso.iso"); 
     } else {
         display_usage();
     }
-
+    
     // Cleanup
     cleanup_libvirt(conn);
-
+    
     return 0;
 }

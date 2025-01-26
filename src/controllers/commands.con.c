@@ -68,8 +68,8 @@ void stop_vm(virConnectPtr conn, const char *vm_name) {
     }
 }
 
-// Function to create a virtual machine from XML configuration
-void create_vm(virConnectPtr conn, const char *vm_name, const char *iso_path) {
+// Function to create a virtual machine with specified resources
+void create_vm(virConnectPtr conn, const char *vm_name, int ram, int cpu, const char *iso_path) {
     // Path to the VM disk image
     const char *disk_path = "/var/lib/libvirt/images/";
     char vm_image_path[1024];
@@ -94,12 +94,12 @@ void create_vm(virConnectPtr conn, const char *vm_name, const char *iso_path) {
         }
     }
 
-    // Minimal XML configuration for the VM with ISO for installation
+    // Updated XML configuration to accept RAM and CPU
     const char *xml =
         "<domain type='kvm'>"
         "  <name>%s</name>"
-        "  <memory unit='KiB'>1048576</memory>"  // 1 GB memory
-        "  <vcpu placement='static'>1</vcpu>"     // 1 CPU core
+        "  <memory unit='KiB'>%d</memory>"  // Dynamically set memory
+        "  <vcpu placement='static'>%d</vcpu>"     // Dynamically set CPU cores
         "  <os>"
         "    <type arch='x86_64' machine='pc-i440fx-2.9'>hvm</type>"
         "    <boot dev='hd'/>"
@@ -125,9 +125,9 @@ void create_vm(virConnectPtr conn, const char *vm_name, const char *iso_path) {
         "  </devices>"
         "</domain>";
 
-    // Prepare the XML string with the VM name, disk path, and ISO path
+    // Prepare the XML string with the VM name, RAM, CPU, disk path, and ISO path
     char vm_xml[1024];
-    snprintf(vm_xml, sizeof(vm_xml), xml, vm_name, vm_image_path, iso_path);  // Using VM name, disk path, and ISO path
+    snprintf(vm_xml, sizeof(vm_xml), xml, vm_name, ram * 1024, cpu, vm_image_path, iso_path);  // Dynamically using RAM and CPU values
 
     // Create the VM from the XML configuration
     virDomainPtr domain = virDomainCreateXML(conn, vm_xml, 0);
@@ -136,7 +136,7 @@ void create_vm(virConnectPtr conn, const char *vm_name, const char *iso_path) {
         return;
     }
 
-    printf("VM %s created with ISO %s.\n", vm_name, iso_path);
+    printf("VM %s created with %d MB RAM, %d CPU(s), and ISO %s.\n", vm_name, ram, cpu, iso_path);
 }
 
 // Function to initialize libvirt connection

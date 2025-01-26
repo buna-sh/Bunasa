@@ -13,8 +13,7 @@ void start_vm(virConnectPtr conn, const char *vm_name);
 void stop_vm(virConnectPtr conn, const char *vm_name);
 
 // Function to create a virtual machine
-void create_vm(virConnectPtr conn, const char *vm_name, const char *iso_path);
-
+void create_vm(virConnectPtr conn, const char *vm_name, int ram, int cpu, const char *iso_path);
 // Function to cleanup libvirt connection
 void cleanup_libvirt(virConnectPtr conn);
 
