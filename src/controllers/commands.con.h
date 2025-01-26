@@ -1,7 +1,10 @@
-#ifndef VM_MANAGER_H
-#define VM_MANAGER_H
+#ifndef COMMANDS_CON_H
+#define COMMANDS_CON_H
 
 #include <libvirt/libvirt.h>
+
+// Function to list active VMs
+void list_vms(virConnectPtr conn);
 
 // Function to start a virtual machine
 void start_vm(virConnectPtr conn, const char *vm_name);
@@ -9,13 +12,16 @@ void start_vm(virConnectPtr conn, const char *vm_name);
 // Function to stop a virtual machine
 void stop_vm(virConnectPtr conn, const char *vm_name);
 
-// Function to create a virtual machine from XML configuration
-void create_vm(virConnectPtr conn, const char *vm_name);
+// Function to create a virtual machine
+void create_vm(virConnectPtr conn, const char *vm_name, const char *iso_path);
 
-// Function to list all active virtual machines
-void list_vms(virConnectPtr conn);
-
-// Function to clean up and close the libvirt connection
+// Function to cleanup libvirt connection
 void cleanup_libvirt(virConnectPtr conn);
 
-#endif
+// Function to initialize libvirt connection
+virConnectPtr initialize_libvirt();
+
+// Function to display usage instructions
+void display_usage();
+
+#endif // COMMANDS_CON_H

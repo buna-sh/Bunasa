@@ -5,17 +5,18 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "commands.con.h"  // Include the header for function declarations
 
 // Function to list active VMs
 void list_vms(virConnectPtr conn) {
     virDomainPtr *domains;
     int num_domains = virConnectListAllDomains(conn, &domains, VIR_CONNECT_LIST_DOMAINS_ACTIVE);
-    
+
     if (num_domains < 0) {
         fprintf(stderr, "Failed to list domains.\n");
         exit(1);
     }
-    
+
     printf("Active VMs:\n");
     for (int i = 0; i < num_domains; i++) {
         const char *name = virDomainGetName(domains[i]);
@@ -25,7 +26,7 @@ void list_vms(virConnectPtr conn) {
             fprintf(stderr, "Failed to get the name of domain %d.\n", i);
         }
     }
-    
+
     // Cleanup
     free(domains);
 }
@@ -68,7 +69,7 @@ void stop_vm(virConnectPtr conn, const char *vm_name) {
 }
 
 // Function to create a virtual machine from XML configuration
-void create_vm(virConnectPtr conn, const char *vm_name) {
+void create_vm(virConnectPtr conn, const char *vm_name, const char *iso_path) {
     // Path to the VM disk image
     const char *disk_path = "/var/lib/libvirt/images/";
     char vm_image_path[1024];
@@ -93,20 +94,28 @@ void create_vm(virConnectPtr conn, const char *vm_name) {
         }
     }
 
-    // Minimal XML configuration for the VM
-    const char *xml = 
+    // Minimal XML configuration for the VM with ISO for installation
+    const char *xml =
         "<domain type='kvm'>"
         "  <name>%s</name>"
         "  <memory unit='KiB'>1048576</memory>"  // 1 GB memory
         "  <vcpu placement='static'>1</vcpu>"     // 1 CPU core
         "  <os>"
         "    <type arch='x86_64' machine='pc-i440fx-2.9'>hvm</type>"
+        "    <boot dev='hd'/>"
+        "    <boot dev='cdrom'/>" // Boot from CD-ROM (ISO)
         "  </os>"
         "  <devices>"
         "    <disk type='file' device='disk'>"
         "      <driver name='qemu' type='qcow2'/>"
         "      <source file='%s'/>"
         "      <target dev='vda' bus='virtio'/>"
+        "    </disk>"
+        "    <disk type='file' device='cdrom'>"
+        "      <driver name='qemu' type='raw'/>"
+        "      <source file='%s'/>"  // ISO path
+        "      <target dev='hdc' bus='ide'/>"
+        "      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>"
         "    </disk>"
         "    <interface type='network'>"
         "      <mac address='52:54:00:dd:cb:cd'/>"
@@ -116,9 +125,9 @@ void create_vm(virConnectPtr conn, const char *vm_name) {
         "  </devices>"
         "</domain>";
 
-    // Prepare the XML string with the VM name and disk path
+    // Prepare the XML string with the VM name, disk path, and ISO path
     char vm_xml[1024];
-    snprintf(vm_xml, sizeof(vm_xml), xml, vm_name, vm_image_path);  // Using VM name and disk path in XML
+    snprintf(vm_xml, sizeof(vm_xml), xml, vm_name, vm_image_path, iso_path);  // Using VM name, disk path, and ISO path
 
     // Create the VM from the XML configuration
     virDomainPtr domain = virDomainCreateXML(conn, vm_xml, 0);
@@ -127,5 +136,24 @@ void create_vm(virConnectPtr conn, const char *vm_name) {
         return;
     }
 
-    printf("VM %s created.\n", vm_name);
+    printf("VM %s created with ISO %s.\n", vm_name, iso_path);
+}
+
+// Function to initialize libvirt connection
+virConnectPtr initialize_libvirt() {
+    virConnectPtr conn = virConnectOpen(NULL);  // Open the default connection (local)
+    if (conn == NULL) {
+        fprintf(stderr, "Failed to open connection to libvirt.\n");
+        exit(1);
+    }
+    return conn;
+}
+
+// Function to display usage instructions
+void display_usage() {
+    printf("Usage:\n");
+    printf("  list             List all active VMs\n");
+    printf("  start <vm_name>  Start the VM with the given name\n");
+    printf("  stop <vm_name>   Stop the VM with the given name\n");
+    printf("  create <vm_name> Create a new VM with the given name\n");
 }
