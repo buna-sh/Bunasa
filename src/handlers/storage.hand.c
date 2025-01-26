@@ -9,7 +9,7 @@
 // Function to create a new virtual disk within a storage pool
 int create_disk(virConnectPtr conn, const char *disk_name, const char *size, const char *format) {
     // Define storage pool name (you can use any existing pool)
-    const char *pool_name = "default"; // Example pool name, replace with your pool's name
+    const char *pool_name = "images"; // Example pool name, replace with your pool's name
 
     // Get the storage pool
     virStoragePoolPtr pool = virStoragePoolLookupByName(conn, pool_name);
@@ -132,7 +132,7 @@ int detach_disk(virConnectPtr conn, const char *vm_name, const char *disk_name) 
 // Function to delete a disk from the storage pool
 int delete_disk(virConnectPtr conn, const char *disk_name) {
     // Define storage pool name (you can use any existing pool)
-    const char *pool_name = "default"; // Example pool name, replace with your pool's name
+    const char *pool_name = "images"; // Example pool name, replace with your pool's name
 
     // Get the storage pool
     virStoragePoolPtr pool = virStoragePoolLookupByName(conn, pool_name);
